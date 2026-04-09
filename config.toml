@@ -13,14 +13,7 @@ highlight_theme = "base16-ocean-dark"
 
 [extra]
 motto = "Forged from first principles."
-disciplines = [
-    { name = "Software", icon = "terminal" },
-    { name = "Hardware", icon = "cpu" },
-    { name = "Deep Learning", icon = "brain" },
-    { name = "Metalwork", icon = "anvil" },
-    { name = "Woodcraft", icon = "chisel" },
-]
 social_links = [
     { name = "GitHub", url = "https://github.com/jon-s58" },
-    { name = "LinkedIn", url = "https://linkedin.com/in/jonathansarig" },
+    { name = "LinkedIn", url = "https://www.linkedin.com/in/jonathan-sarig" },
 ]

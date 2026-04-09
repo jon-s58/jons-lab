@@ -10,7 +10,7 @@
     {% endif %}
 
     <div class="projects-grid">
-        {% for project in section.pages | sort(attribute="extra.weight") %}
+        {% for project in section.pages %}
         <article class="project-card">
             <h2><a href="{{ project.permalink }}">{{ project.title }}</a></h2>
             {% if project.extra.tech %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros.html" as macros %}
 
 {% block title %}Contact | {{ config.title }}{% endblock %}
 
@@ -12,7 +13,8 @@
     <div class="contact-links">
         {% for link in config.extra.social_links %}
         <a href="{{ link.url }}" target="_blank" rel="noopener" class="contact-btn">
-            {{ link.name }}
+            <span class="contact-btn-icon">{{ macros::social_icon(name=link.name) }}</span>
+            <span>{{ link.name }}</span>
         </a>
         {% endfor %}
     </div>
