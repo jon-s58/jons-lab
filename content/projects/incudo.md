@@ -1,0 +1,21 @@
++++
+title = "Incudo"
+description = "A CAD Processing Engine."
+weight = 2
+
+[extra]
+tech = ["Rust", "C++", "Math"]
+github = "https://github.com/jon-s58/astra"
++++
+
+A CAD processing engine built with Rust, C++ and, Python
+
+<!-- more -->
+
+## Key Features
+- Mesh Handling Engine
+- BREP Handling Engine
+- Mesh to BREP reconstruction
+- CAD as Code - shape manipulation and healing using Incudo SDK, automated pipelines and more
+
+<!-- ## Technical Implementation -->
