@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-seal">{{ logo_svg | safe }}</div>
+        <h1 class="hero-title">Jon's Lab</h1>
+        <p class="hero-motto">{{ config.extra.motto }}</p>
+        <div class="hero-rule"><span class="rule-ornament">&#9670;</span></div>
+        <p class="hero-description">
+            A modern polymath's workshop &mdash; where software, hardware, and ideas
+            are forged from first principles. Part inventor's lab, part blacksmith's forge,
+            part philosopher's study.
+        </p>
+    </div>
+</section>
+
+<section class="disciplines">
+    <h2 class="section-heading">Disciplines</h2>
+    <div class="discipline-grid">
+        {% for d in config.extra.disciplines %}
+        <div class="discipline-card">
+            <div class="discipline-icon">
+                {% if d.icon == "terminal" %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,7 9,12 4,17"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                {% elif d.icon == "cpu" %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="6" width="12" height="12"/><rect x="9" y="9" width="6" height="6"/><line x1="3" y1="9" x2="6" y2="9"/><line x1="3" y1="15" x2="6" y2="15"/><line x1="18" y1="9" x2="21" y2="9"/><line x1="18" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="6"/><line x1="15" y1="3" x2="15" y2="6"/><line x1="9" y1="18" x2="9" y2="21"/><line x1="15" y1="18" x2="15" y2="21"/></svg>
+                {% elif d.icon == "brain" %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="6" r="1.5"/><circle cx="19" cy="6" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="19" cy="18" r="1.5"/><line x1="6.5" y1="7" x2="10.5" y2="11"/><line x1="17.5" y1="7" x2="13.5" y2="11"/><line x1="6.5" y1="17" x2="10.5" y2="13"/><line x1="17.5" y1="17" x2="13.5" y2="13"/></svg>
+                {% elif d.icon == "anvil" %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h14l-2 4H6z"/><line x1="17" y1="8" x2="20" y2="11"/><line x1="9" y1="12" x2="9" y2="18"/><line x1="6" y1="18" x2="12" y2="18"/></svg>
+                {% elif d.icon == "chisel" %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 4l6 6-9 9-3-3z"/><path d="M11 16l-5 5"/><path d="M3 21l3-3"/></svg>
+                {% endif %}
+            </div>
+            <h3>{{ d.name }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% set projects_section = get_section(path="projects/_index.md") %}
+{% if projects_section.pages | length > 0 %}
+<section class="featured-work">
+    <h2 class="section-heading">Recent Work</h2>
+    <div class="project-list">
+        {% for project in projects_section.pages | sort(attribute="extra.weight") %}
+        {% if loop.index <= 3 %}
+        <a href="{{ project.permalink }}" class="project-preview">
+            <h3>{{ project.title }}</h3>
+            {% if project.extra.tech %}
+            <div class="tech-tags">
+                {% for t in project.extra.tech %}
+                <span class="tag">{{ t }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if project.description %}
+            <p>{{ project.description }}</p>
+            {% endif %}
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <a href="{{ get_url(path='@/projects/_index.md') }}" class="see-all">View all projects &rarr;</a>
+</section>
+{% endif %}
+
+<section class="cta">
+    <div class="cta-content">
+        <p>Every product carries the maker's mark of someone who builds across disciplines: from code to metal, from deep learning to woodcraft.</p>
+        <a href="{{ get_url(path='@/contact/_index.md') }}" class="btn">Get in Touch</a>
+    </div>
+</section>
+{% endblock %}

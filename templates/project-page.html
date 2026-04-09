@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <header class="post-header">
+        <h1>{{ page.title }}</h1>
+        {% if page.extra.tech %}
+        <div class="tech-tags">
+            {% for t in page.extra.tech %}
+            <span class="tag">{{ t }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="page-body">
+        {{ page.content | safe }}
+    </div>
+
+    <footer class="post-footer">
+        <div class="project-links">
+            {% if page.extra.github %}
+            <a href="{{ page.extra.github }}" target="_blank" rel="noopener">View on GitHub</a>
+            {% endif %}
+            {% if page.extra.demo %}
+            <a href="{{ page.extra.demo }}" target="_blank" rel="noopener">Live Demo</a>
+            {% endif %}
+        </div>
+        <a href="{{ get_url(path='@/projects/_index.md') }}" class="back-link">&larr; All projects</a>
+    </footer>
+</article>
+{% endblock %}

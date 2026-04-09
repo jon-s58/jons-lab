@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | {{ config.title }}{% endblock %}
+
+{% block content %}
+<section class="page-content">
+    <h1>{{ section.title }}</h1>
+    {% if section.content %}
+    <div class="page-intro">{{ section.content | safe }}</div>
+    {% endif %}
+
+    <div class="projects-grid">
+        {% for project in section.pages | sort(attribute="extra.weight") %}
+        <article class="project-card">
+            <h2><a href="{{ project.permalink }}">{{ project.title }}</a></h2>
+            {% if project.extra.tech %}
+            <div class="tech-tags">
+                {% for t in project.extra.tech %}
+                <span class="tag">{{ t }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if project.description %}
+            <p class="project-desc">{{ project.description }}</p>
+            {% endif %}
+            <div class="project-links">
+                <a href="{{ project.permalink }}">Read more &rarr;</a>
+                {% if project.extra.github %}
+                <a href="{{ project.extra.github }}" target="_blank" rel="noopener">GitHub</a>
+                {% endif %}
+                {% if project.extra.demo %}
+                <a href="{{ project.extra.demo }}" target="_blank" rel="noopener">Live Demo</a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

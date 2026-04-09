@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Journal | {{ config.title }}{% endblock %}
+
+{% block content %}
+<section class="page-content">
+    <h1>{{ section.title }}</h1>
+    {% if section.content %}
+    <div class="page-intro">{{ section.content | safe }}</div>
+    {% endif %}
+
+    <div class="post-list">
+        {% for post in paginator.pages %}
+        <article class="post-preview">
+            <time datetime="{{ post.date }}">{{ post.date | date(format="%B %d, %Y") }}</time>
+            <h2><a href="{{ post.permalink }}">{{ post.title }}</a></h2>
+            {% if post.taxonomies.tags %}
+            <div class="tech-tags">
+                {% for tag in post.taxonomies.tags %}
+                <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if post.summary %}
+            <p>{{ post.summary | safe }}</p>
+            {% endif %}
+            <a href="{{ post.permalink }}" class="read-more">Read more &rarr;</a>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if paginator.number_pagers > 1 %}
+    <nav class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="btn">&larr; Newer</a>
+        {% endif %}
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="btn">Older &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

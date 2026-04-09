@@ -1,0 +1,26 @@
+base_url = "https://jons-lab.io"
+title = "Jon's Lab"
+description = "A modern polymath's workshop — where software, hardware, and ideas are forged from first principles."
+author = "Jonathan Sarig"
+compile_sass = true
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+taxonomies = [{ name = "tags", feed = true }]
+
+[markdown]
+highlight_code = true
+highlight_theme = "base16-ocean-dark"
+
+[extra]
+motto = "Forged from first principles."
+disciplines = [
+    { name = "Software", icon = "terminal" },
+    { name = "Hardware", icon = "cpu" },
+    { name = "Deep Learning", icon = "brain" },
+    { name = "Metalwork", icon = "anvil" },
+    { name = "Woodcraft", icon = "chisel" },
+]
+social_links = [
+    { name = "GitHub", url = "https://github.com/jon-s58" },
+    { name = "LinkedIn", url = "https://linkedin.com/in/jonathansarig" },
+]

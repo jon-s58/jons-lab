@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | {{ config.title }}{% endblock %}
+
+{% block content %}
+<section class="page-content">
+    <h1>{{ section.title }}</h1>
+    <div class="page-body">
+        {{ section.content | safe }}
+    </div>
+
+    <div class="contact-links">
+        {% for link in config.extra.social_links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener" class="contact-btn">
+            {{ link.name }}
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
