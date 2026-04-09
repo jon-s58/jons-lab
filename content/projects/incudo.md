@@ -1,7 +1,7 @@
 +++
 title = "Incudo"
 description = "A CAD Processing Engine."
-weight = 2
+weight = 1
 
 [extra]
 tech = ["Rust", "C++", "Math"]

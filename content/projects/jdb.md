@@ -1,7 +1,7 @@
 +++
 title = "JDB"
 description = "A database written from scratch using Rust."
-weight = 1
+weight = 2
 
 [extra]
 tech = ["Rust", "Databases", "Tokio"]
