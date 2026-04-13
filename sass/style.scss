@@ -221,12 +221,131 @@ img {
     margin-top: $space-lg;
 }
 
+.footer-signup {
+    display: flex;
+    gap: $space-md;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-md 0;
+    border-bottom: 1px solid $border;
+    margin-bottom: $space-md;
+
+    .footer-signup-text {
+        max-width: 360px;
+
+        h3 {
+            font-family: $font-mono;
+            font-size: 1rem;
+            font-weight: 600;
+            color: $accent;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: $space-xs;
+        }
+
+        p {
+            color: $text-secondary;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    }
+
+    .footer-signup-form {
+        flex: 1;
+        max-width: 420px;
+    }
+}
+
 .footer-content {
     display: flex;
     align-items: center;
     gap: $space-xs;
     color: $text-muted;
     font-size: 0.85rem;
+}
+
+// =============================================================================
+// Newsletter Signup Form (shared)
+// =============================================================================
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.newsletter-signup {
+    margin: $space-md 0 $space-lg;
+    padding: $space-md;
+    border: 1px solid $border;
+    background: $bg-card;
+}
+
+.signup-form {
+    .signup-label {
+        display: block;
+        font-family: $font-mono;
+        font-size: 0.85rem;
+        color: $accent;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: $space-xs;
+    }
+
+    .signup-row {
+        display: flex;
+        gap: $space-xs;
+    }
+
+    input[type="email"] {
+        flex: 1;
+        min-width: 0;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        padding: 0.7rem 0.9rem;
+        color: $text-primary;
+        background: $bg-primary;
+        border: 1px solid $border-light;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &::placeholder {
+            color: $text-muted;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $accent;
+            box-shadow: 0 0 0 3px $accent-glow;
+        }
+    }
+
+    .btn {
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .signup-note {
+        margin-top: $space-xs;
+        color: $text-muted;
+        font-size: 0.8rem;
+        font-family: $font-mono;
+        letter-spacing: 0.02em;
+    }
+}
+
+.post-kicker {
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $accent;
+    margin-bottom: $space-xs;
 }
 
 .footer-mark {
@@ -769,6 +888,21 @@ img {
         flex-direction: column;
         gap: $space-sm;
         align-items: flex-start;
+    }
+
+    .footer-signup {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $space-sm;
+
+        .footer-signup-form {
+            width: 100%;
+            max-width: none;
+        }
+    }
+
+    .signup-form .signup-row {
+        flex-direction: column;
     }
 }
 

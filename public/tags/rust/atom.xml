@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jon&#x27;s Lab - Rust</title>
+    <subtitle>A modern polymath&#x27;s workshop — where software, hardware, and ideas are forged from first principles.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jons-lab.io/tags/rust/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jons-lab.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-02-26T00:00:00+00:00</updated>
+    <id>https://jons-lab.io/tags/rust/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Rust C++ FFI</title>
+        <published>2026-02-26T00:00:00+00:00</published>
+        <updated>2026-02-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Jonathan Sarig
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jons-lab.io/loops/rust-cpp-ffi/"/>
+        <id>https://jons-lab.io/loops/rust-cpp-ffi/</id>
+        
+        <summary type="html">&lt;p&gt;Notes from tinkering with C++ FFI in Rust.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building a Database From Scratch - Storage Layer Page Design</title>
+        <published>2025-12-11T00:00:00+00:00</published>
+        <updated>2025-12-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Jonathan Sarig
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jons-lab.io/loops/building-a-database-from-scratch-page/"/>
+        <id>https://jons-lab.io/loops/building-a-database-from-scratch-page/</id>
+        
+        <summary type="html">&lt;p&gt;From 0-100 real quick, we will be diving into the storage layer - the first layer of the database, and specifically to the Page one of the most basic units.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building a Database From Scratch in Rust</title>
+        <published>2025-08-25T00:00:00+00:00</published>
+        <updated>2025-08-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Jonathan Sarig
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jons-lab.io/loops/building-a-database-from-scratch-in-rust-introduction/"/>
+        <id>https://jons-lab.io/loops/building-a-database-from-scratch-in-rust-introduction/</id>
+        
+        <summary type="html">&lt;p&gt;I am building a database from scratch using Rust! why? for fun, to learn more about Databases, Rust, and to become a better developer.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

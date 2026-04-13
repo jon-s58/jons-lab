@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Lab Notes | {{ config.title }}{% endblock %}
+{% block description %}Lab Notes — field notes from the workshop, delivered to your inbox.{% endblock %}
+
+{% block content %}
+<section class="page-content">
+    <h1>{{ section.title }}</h1>
+    {% if section.content %}
+    <div class="page-intro">{{ section.content | safe }}</div>
+    {% endif %}
+
+    <div class="newsletter-signup">
+        <form
+            action="https://buttondown.com/api/emails/embed-subscribe/jons-lab"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.com/jons-lab', 'popupwindow')"
+            class="signup-form"
+        >
+            <label for="bd-email-newsletter" class="signup-label">Subscribe to Lab Notes</label>
+            <div class="signup-row">
+                <input
+                    type="email"
+                    name="email"
+                    id="bd-email-newsletter"
+                    placeholder="you@domain.com"
+                    required
+                />
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+            <p class="signup-note">No spam. Unsubscribe any time.</p>
+        </form>
+    </div>
+
+    <div class="post-list">
+        {% for post in paginator.pages %}
+        <article class="post-preview">
+            <time datetime="{{ post.date }}">{{ post.date | date(format="%B %d, %Y") }}</time>
+            <h2><a href="{{ post.permalink }}">{{ post.title }}</a></h2>
+            {% if post.taxonomies.tags %}
+            <div class="tech-tags">
+                {% for tag in post.taxonomies.tags %}
+                <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if post.summary %}
+            <p>{{ post.summary | safe }}</p>
+            {% endif %}
+            <a href="{{ post.permalink }}" class="read-more">Read issue &rarr;</a>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if paginator.number_pagers > 1 %}
+    <nav class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="btn">&larr; Newer</a>
+        {% endif %}
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="btn">Older &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}
