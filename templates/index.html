@@ -1,80 +1,192 @@
 {% extends "base.html" %}
 
+{% block body_class %}home-forge{% endblock %}
+
 {% block content %}
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-seal">{{ logo_svg | safe }}</div>
-        <h1 class="hero-title">Jon's Lab</h1>
-        <p class="hero-motto">{{ config.extra.motto }}</p>
-        <div class="hero-rule"><span class="rule-ornament">&#9670;</span></div>
-        <p class="hero-description">
-            I'm Jon, a maker, from software to woodwork. I build software that's
-            heavy on math, in projects of every size. I've spent years as a software
-            engineer in backend, ML, and data. Here I publish what comes out of the
-            workshop: projects, ventures, and technical writing.
-        </p>
+{% set projects_section = get_section(path="projects/_index.md") %}
+{% set loops_section = get_section(path="loops/_index.md") %}
+{% set total_loops = loops_section.pages | length %}
+{% set total_projects = projects_section.pages | length %}
+{% set current_project_slug = config.extra.current_project | default(value="") %}
+{% set current_project = false %}
+{% if current_project_slug %}
+    {% set current_project = get_page(path="projects/" ~ current_project_slug ~ ".md") %}
+{% endif %}
+
+<section class="forge-status" aria-label="Workshop status">
+    <div class="forge-status-cell forge-status-cell--flex1">
+        <span class="forge-status-label">Status</span>
+        <span class="forge-status-value"><span class="forge-dot"></span>Building</span>
+    </div>
+    <div class="forge-status-cell forge-status-cell--flex2">
+        <span class="forge-status-label">Current Loop</span>
+        <span class="forge-status-value">
+            {%- if total_loops > 0 -%}
+                {{ loops_section.pages | first | get(key="title") | truncate(length=48) }}
+            {%- else -%}
+                &mdash;
+            {%- endif -%}
+        </span>
+    </div>
+    {% if current_project %}
+    <a class="forge-status-cell forge-status-cell--flex14 forge-status-cell--link" href="{{ current_project.permalink }}">
+        <span class="forge-status-label">Currently Working On</span>
+        <span class="forge-status-value"><span class="forge-dot"></span>{{ current_project.title }}</span>
+    </a>
+    {% endif %}
+    <div class="forge-status-cell forge-status-cell--flex08">
+        <span class="forge-status-label">Uptime</span>
+        <span class="forge-status-value" data-uptime>—</span>
+    </div>
+    <div class="forge-status-cell forge-status-cell--flex1 forge-status-cell--last">
+        <span class="forge-status-label">Local Time</span>
+        <span class="forge-status-value" data-local-time>—</span>
     </div>
 </section>
 
-{% set projects_section = get_section(path="projects/_index.md") %}
-{% if projects_section.pages | length > 0 %}
-<section class="featured-work">
-    <h2 class="section-heading">Recent Work</h2>
-    <div class="preview-list">
+<section class="forge-hero">
+    <div class="forge-kicker">// A workshop for math-heavy software</div>
+    <h1 class="forge-display">
+        Forged<br>
+        from first<br>
+        principles.<span class="forge-display-mark">&#9670;</span>
+    </h1>
+    <div class="forge-hero-grid">
+        <p class="forge-hero-lede">
+            I build software that leans hard on math &mdash; engines, solvers, runtimes.
+            Some stays open-source, some becomes a startup, some stays a micro-SaaS
+            I run from the shop.
+        </p>
+        <dl class="forge-stats">
+            <div class="forge-stat-row"><dt>Active Projects</dt><dd>{{ total_projects }}</dd></div>
+            <div class="forge-stat-row"><dt>Loops Published</dt><dd>{{ total_loops }}</dd></div>
+            <div class="forge-stat-row"><dt>Lines of Rust</dt><dd>~84k</dd></div>
+            <div class="forge-stat-row"><dt>Coffee / Day</dt><dd>3.2</dd></div>
+        </dl>
+    </div>
+</section>
+
+{% if total_projects > 0 %}
+<section class="forge-section">
+    <header class="forge-section-head">
+        <div class="forge-section-title">
+            <span class="forge-section-index">// 01</span>
+            <h2>In the Forge</h2>
+        </div>
+        <a class="forge-section-action" href="{{ get_url(path='@/projects/_index.md') }}">All projects &rarr;</a>
+    </header>
+    <div class="forge-grid">
         {% for project in projects_section.pages %}
         {% if loop.index <= 3 %}
-        <a href="{{ project.permalink }}" class="preview-card">
-            <h3>{{ project.title }}</h3>
+        <a class="forge-card" href="{{ project.permalink }}">
+            <div class="forge-card-diagram" aria-hidden="true">
+                <span class="forge-card-diagram-label">System &middot; {{ project.title | upper }}</span>
+            </div>
+            <div class="forge-card-meta">
+                <span class="forge-card-scale">
+                    {%- if project.extra.scale -%}
+                        {{ project.extra.scale | upper }}
+                    {%- elif project.extra.github -%}
+                        OPEN SOURCE
+                    {%- else -%}
+                        PROJECT
+                    {%- endif -%}
+                </span>
+                <span class="forge-card-stage">
+                    <span class="forge-dot"></span>
+                    {%- if project.extra.stage -%}
+                        {{ project.extra.stage | upper }}
+                    {%- else -%}
+                        ACTIVE
+                    {%- endif -%}
+                </span>
+            </div>
+            <div class="forge-card-name">{{ project.title }}</div>
+            <div class="forge-card-blurb">{{ project.description }}</div>
             {% if project.extra.tech %}
-            <div class="tech-tags">
+            <div class="forge-card-tags">
                 {% for t in project.extra.tech %}
-                <span class="tag">{{ t }}</span>
+                <span class="forge-tag">{{ t }}</span>
                 {% endfor %}
             </div>
-            {% endif %}
-            {% if project.description %}
-            <p>{{ project.description }}</p>
             {% endif %}
         </a>
         {% endif %}
         {% endfor %}
     </div>
-    <a href="{{ get_url(path='@/projects/_index.md') }}" class="see-all">View all projects &rarr;</a>
 </section>
 {% endif %}
 
-{% set loops_section = get_section(path="loops/_index.md") %}
-{% if loops_section.pages | length > 0 %}
-<section class="recent-loops">
-    <h2 class="section-heading">Recent Loops</h2>
-    <div class="preview-list">
+{% if total_loops > 0 %}
+<section class="forge-section">
+    <header class="forge-section-head">
+        <div class="forge-section-title">
+            <span class="forge-section-index">// 02</span>
+            <h2>Loops of Thought</h2>
+        </div>
+        <a class="forge-section-action" href="{{ get_url(path='@/loops/_index.md') }}">All posts &rarr;</a>
+    </header>
+    <ol class="forge-ledger">
         {% for post in loops_section.pages %}
-        {% if loop.index <= 3 %}
-        <a href="{{ post.permalink }}" class="preview-card">
-            <time datetime="{{ post.date }}">{{ post.date | date(format="%B %d, %Y") }}</time>
-            <h3>{{ post.title }}</h3>
-            {% if post.taxonomies.tags %}
-            <div class="tech-tags">
-                {% for tag in post.taxonomies.tags %}
-                <span class="tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% if post.summary %}
-            <p>{{ post.summary | safe | striptags | truncate(length=160) }}</p>
-            {% endif %}
-        </a>
+        {% if loop.index <= 4 %}
+        {% set n = total_loops - loop.index0 %}
+        <li class="forge-ledger-row">
+            <a href="{{ post.permalink }}" class="forge-ledger-link">
+                <span class="forge-ledger-index">#{% if n < 10 %}00{{ n }}{% elif n < 100 %}0{{ n }}{% else %}{{ n }}{% endif %}</span>
+                <time class="forge-ledger-date" datetime="{{ post.date }}">{{ post.date | date(format="%b %d, %Y") | upper }}</time>
+                <div class="forge-ledger-body">
+                    <div class="forge-ledger-title">{{ post.title }}</div>
+                    {% if post.summary %}
+                    <div class="forge-ledger-blurb">{{ post.summary | safe | striptags | truncate(length=180) }}</div>
+                    {% endif %}
+                </div>
+                {% if post.taxonomies.tags %}
+                <div class="forge-ledger-tags">
+                    {% for tag in post.taxonomies.tags %}
+                    {% if loop.index <= 3 %}
+                    <span class="forge-tag forge-tag--outline">{{ tag }}</span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </a>
+        </li>
         {% endif %}
         {% endfor %}
-    </div>
-    <a href="{{ get_url(path='@/loops/_index.md') }}" class="see-all">All posts &rarr;</a>
+    </ol>
 </section>
 {% endif %}
 
-<section class="cta">
-    <div class="cta-content">
-        <p>Whatever I build, I make sure it's right. If you've got something you need built, or want to talk about one of my products or open-source projects, reach out.</p>
-        <a href="{{ get_url(path='@/contact/_index.md') }}" class="btn">Get in Touch</a>
+<section class="forge-split">
+    <div class="forge-split-pane">
+        <div class="forge-kicker">// Hire the shop</div>
+        <h3 class="forge-split-title">Got something<br>hard to build?</h3>
+        <p class="forge-split-copy">
+            Math-heavy backends, custom engines, research engineering. A small
+            number of contracts a year.
+        </p>
+        <a href="{{ get_url(path='@/contact/_index.md') }}" class="forge-btn">Get in touch &#8599;</a>
+    </div>
+    <div class="forge-split-pane">
+        <div class="forge-kicker">// Lab Notes</div>
+        <h3 class="forge-split-title">Subscribe.</h3>
+        <p class="forge-split-copy">
+            Field notes from the workshop. Sent when something's worth sending.
+        </p>
+        <form
+            action="https://buttondown.email/api/emails/embed-subscribe/jons-lab"
+            method="post"
+            class="forge-signup"
+        >
+            <label for="bd-email-home" class="visually-hidden">Email address</label>
+            <input type="email" name="email" id="bd-email-home" placeholder="you@domain.com" required>
+            <button type="submit">Subscribe &rarr;</button>
+            <input type="hidden" value="1" name="embed">
+        </form>
     </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ get_url(path='home-status.js') }}" defer></script>
 {% endblock %}

@@ -24,8 +24,9 @@ $border:         #2e2922;
 $border-light:   #3a352d;
 
 // -- Typography --
-$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+$font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-mono:    'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+$font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 
 // -- Sizing --
 $container-width: 900px;
@@ -914,5 +915,493 @@ img {
     .site-nav {
         flex-wrap: wrap;
         justify-content: center;
+    }
+}
+
+// =============================================================================
+// Direction C — Workshop / Forge (Home)
+// =============================================================================
+
+$forge-iron: #3a3430;
+$forge-pad-x: 48px;
+
+body.home-forge {
+    .site-main { padding: 0; }
+    .site-main > .container { max-width: none; padding: 0; }
+    .footer-signup { display: none; }
+}
+
+// --- Shared primitives ---
+.forge-kicker {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $accent;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+}
+
+.forge-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $accent;
+    box-shadow: 0 0 8px $accent;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.forge-tag {
+    display: inline-block;
+    font-family: $font-mono;
+    font-size: 0.64rem;
+    padding: 3px 8px;
+    color: $text-primary;
+    border: 1px solid $forge-iron;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: transparent;
+
+    &--outline {
+        border-color: $border-light;
+    }
+}
+
+// --- Live status strip ---
+.forge-status {
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+
+    &-cell {
+        padding: 10px 20px;
+        border-right: 1px solid $border;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+
+        &--flex1  { flex: 1; }
+        &--flex2  { flex: 2; }
+        &--flex14 { flex: 1.4; }
+        &--flex08 { flex: 0.8; }
+        &--last   { border-right: none; }
+
+        &--link {
+            color: inherit;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+
+            &:hover {
+                background: $bg-card;
+                color: $accent;
+
+                .forge-status-value { color: $accent; }
+            }
+        }
+    }
+
+    &-label {
+        font-size: 0.58rem;
+        color: $text-muted;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    &-value {
+        font-size: 0.78rem;
+        color: $text-primary;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// --- Hero ---
+.forge-hero {
+    padding: 72px $forge-pad-x 20px;
+    max-width: 1400px;
+
+    .forge-display {
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: clamp(3.5rem, 10vw, 9rem);
+        line-height: 0.9;
+        letter-spacing: -0.035em;
+        margin: 0 0 1.25rem;
+        max-width: 1200px;
+        color: $text-primary;
+        text-transform: uppercase;
+    }
+
+    .forge-display-mark {
+        color: $accent;
+        font-size: 0.55em;
+        margin-left: 0.1em;
+        vertical-align: 0.08em;
+    }
+
+    .forge-hero-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 48px;
+        margin-top: 48px;
+        max-width: 1120px;
+    }
+
+    .forge-hero-lede {
+        font-size: 1.05rem;
+        color: $text-primary;
+        opacity: 0.88;
+        line-height: 1.55;
+        margin: 0;
+    }
+
+    .forge-stats {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-family: $font-mono;
+        font-size: 0.75rem;
+        color: $text-secondary;
+
+        .forge-stat-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed $border-light;
+            padding: 6px 0;
+
+            dt { margin: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+            dd { margin: 0; color: $text-primary; }
+        }
+    }
+}
+
+// --- Sections ---
+.forge-section {
+    padding: 56px $forge-pad-x 20px;
+}
+
+.forge-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+}
+
+.forge-section-title {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+
+    .forge-section-index {
+        font-family: $font-mono;
+        font-size: 0.78rem;
+        color: $accent;
+        letter-spacing: 0.18em;
+    }
+
+    h2 {
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: clamp(1.8rem, 4vw, 2.75rem);
+        letter-spacing: -0.03em;
+        margin: 0;
+        color: $text-primary;
+        text-transform: uppercase;
+    }
+}
+
+.forge-section-action {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $accent;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+// --- Forge cards ---
+.forge-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: $border;
+}
+
+.forge-card {
+    background: $bg-primary;
+    padding: 24px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 300px;
+    color: $text-primary;
+    transition: background 0.2s;
+
+    &:hover {
+        background: $bg-card;
+        color: $text-primary;
+    }
+}
+
+.forge-card-diagram {
+    height: 80px;
+    border: 1px solid $forge-iron;
+    margin-bottom: 6px;
+    background-image: repeating-linear-gradient(135deg, $forge-iron 0 1px, transparent 1px 10px);
+    position: relative;
+
+    .forge-card-diagram-label {
+        position: absolute;
+        bottom: 6px;
+        left: 8px;
+        font-family: $font-mono;
+        font-size: 0.58rem;
+        color: $text-muted;
+        letter-spacing: 0.1em;
+    }
+}
+
+.forge-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $font-mono;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+
+    .forge-card-scale { color: $text-muted; }
+    .forge-card-stage { color: $accent; display: inline-flex; align-items: center; }
+}
+
+.forge-card-name {
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: -0.03em;
+    color: $text-primary;
+    line-height: 1;
+}
+
+.forge-card-blurb {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    flex: 1;
+    line-height: 1.55;
+}
+
+.forge-card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+// --- Ledger (Loops) ---
+.forge-ledger {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid $border;
+
+    .forge-ledger-row {
+        border-bottom: 1px solid $border;
+    }
+
+    .forge-ledger-link {
+        display: grid;
+        grid-template-columns: 90px 120px 1fr 220px;
+        padding: 22px 0;
+        align-items: baseline;
+        gap: 24px;
+        color: $text-primary;
+
+        &:hover {
+            color: $text-primary;
+            .forge-ledger-title { color: $accent; }
+        }
+    }
+
+    .forge-ledger-index {
+        font-family: $font-mono;
+        font-size: 0.72rem;
+        color: $accent;
+        letter-spacing: 0.06em;
+    }
+
+    .forge-ledger-date {
+        font-family: $font-mono;
+        font-size: 0.72rem;
+        color: $text-muted;
+        letter-spacing: 0.06em;
+    }
+
+    .forge-ledger-title {
+        font-family: $font-display;
+        font-size: 1.4rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+        color: $text-primary;
+        transition: color 0.2s;
+    }
+
+    .forge-ledger-blurb {
+        color: $text-secondary;
+        font-size: 0.88rem;
+        max-width: 640px;
+        line-height: 1.55;
+    }
+
+    .forge-ledger-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
+// --- Split CTA ---
+.forge-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    margin-top: 24px;
+}
+
+.forge-split-pane {
+    padding: 48px;
+
+    &:first-child { border-right: 1px solid $border; }
+
+    .forge-split-title {
+        font-family: $font-display;
+        font-size: 2.15rem;
+        font-weight: 700;
+        letter-spacing: -0.028em;
+        line-height: 1.05;
+        margin: 0 0 1rem;
+        color: $text-primary;
+    }
+
+    .forge-split-copy {
+        color: $text-secondary;
+        font-size: 0.95rem;
+        max-width: 420px;
+        margin: 0 0 1.4rem;
+        line-height: 1.55;
+    }
+}
+
+.forge-btn {
+    display: inline-block;
+    background: $accent;
+    color: $bg-primary;
+    border: none;
+    padding: 12px 22px;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: filter 0.2s, color 0.2s;
+
+    &:hover {
+        color: $bg-primary;
+        filter: brightness(1.08);
+    }
+}
+
+.forge-signup {
+    display: flex;
+    border-bottom: 1px solid $text-secondary;
+    padding-bottom: 8px;
+    max-width: 460px;
+    gap: 8px;
+
+    input[type="email"] {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: $text-primary;
+        font-family: $font-mono;
+        font-size: 0.9rem;
+        padding: 0;
+
+        &::placeholder { color: $text-muted; }
+    }
+
+    button {
+        background: transparent;
+        border: none;
+        color: $accent;
+        font-family: $font-mono;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        cursor: pointer;
+        text-transform: uppercase;
+
+        &:hover { filter: brightness(1.2); }
+    }
+}
+
+// --- Responsive ---
+@media (max-width: 900px) {
+    .forge-status {
+        flex-wrap: wrap;
+
+        &-cell {
+            flex: 1 1 50% !important;
+            border-bottom: 1px solid $border;
+
+            &:nth-child(even) { border-right: none; }
+        }
+    }
+
+    .forge-hero {
+        padding: 48px 24px 12px;
+
+        .forge-hero-grid {
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+    }
+
+    .forge-section { padding: 40px 24px 12px; }
+
+    .forge-grid { grid-template-columns: 1fr; }
+
+    .forge-ledger .forge-ledger-link {
+        grid-template-columns: 60px 1fr;
+        grid-template-areas:
+            "idx date"
+            "body body"
+            "tags tags";
+        gap: 8px 16px;
+
+        .forge-ledger-index { grid-area: idx; }
+        .forge-ledger-date  { grid-area: date; justify-self: end; }
+        .forge-ledger-body  { grid-area: body; }
+        .forge-ledger-tags  { grid-area: tags; justify-content: flex-start; }
+    }
+
+    .forge-split {
+        grid-template-columns: 1fr;
+
+        .forge-split-pane {
+            padding: 32px 24px;
+            &:first-child {
+                border-right: none;
+                border-bottom: 1px solid $border;
+            }
+        }
     }
 }
