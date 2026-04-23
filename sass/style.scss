@@ -1195,27 +1195,22 @@ body.home-forge {
 }
 
 // --- Top status strip ---
-// Thin horizontal bar that sits directly under the site header. Replaces the
-// old "workshop floor" strip — cells are key→value pairs (space-between),
-// not stacked.
+// Thin bar directly under the site header. Cells stack the label above the
+// value (e.g. STATUS on top, Building underneath).
 .forge-strip {
     display: flex;
     align-items: stretch;
     border-bottom: 1px solid $border;
     font-family: $font-mono;
-    font-size: 0.68rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
 
     &-cell {
         flex: 1;
         min-width: 0;
-        padding: 10px 24px;
+        padding: 10px 20px;
         border-right: 1px solid $border;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+        flex-direction: column;
+        gap: 4px;
 
         &--last { border-right: none; }
 
@@ -1234,12 +1229,17 @@ body.home-forge {
     }
 
     &-key {
+        font-size: 0.58rem;
         color: $text-muted;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
         white-space: nowrap;
     }
 
     &-value {
+        font-size: 0.78rem;
         color: $text-primary;
+        letter-spacing: 0.03em;
         display: inline-flex;
         align-items: center;
         gap: 6px;

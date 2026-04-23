@@ -6,15 +6,27 @@ tags = ["Rust", "C++", "Incudo", "Machine Learning"]
 [extra]
 reading_time = 10
 +++
-What are Meshes? What are BREPs? Why converting one to the other is important and why is it so hard?
+What are Meshes? What are BREPs? Why is converting one to the other important, and why is it so hard?
 
 <!-- more -->
 
-We are diving deep into the world of mechanical engineering, 3d printing, manufacturing and more, there is an unsolved problem in the world of mechanical engineering which is converting a mesh into a brep but first of all we need to understand what are meshes and breps?
+We are diving deep into the world of mechanical engineering, 3D printing, and manufacturing. There is an unsolved problem at the intersection of these fields: converting a **mesh** into a **BREP**. Before we get into why it's hard, we need to understand what these two representations actually are.
 
-*Mesh* - A polygon mesh represents a 3d object's surface using a collection of vertices, edges, and faces. It's typically composed of simple shapes most commonly triangles these are then used to approximate curves. The resolution of a mesh determines how detailed and smooth the model apppears - imagine a tea pot how do we render it on screen in a video game? how do we represent it? the most commmon way is to stitch together thousands if not millions of tiny triangles into a shape the more triangles the better the detail. this faceted structure makes maeshes computationally lightweight to draw on screen making them ideal for video games, simulations and more... however once we go into the world of percision this becomes a limiting feature amd this is where BREPs come into play
+## What is a Mesh?
 
-*BREP* - Boundary Representation defines a 3D model mathematically using geometric boundaries - mathematically calculated surfaces (NURBS), curves and points. instead of approximating a shape with flat polygons brep maintains infinite percision, curves are perfectly smooth no matter how much you zoom in. this exact mathematical definition allows for the inclusion of solid properties enabling the software to accurately calculate the model's physcial volume and mass.
+A **polygon mesh** represents a 3D object's surface using a collection of vertices, edges, and faces. It's typically composed of simple shapes - most commonly triangles - which are then stitched together to approximate curves. The resolution of a mesh determines how detailed and smooth the model appears.
 
-when to use each? meshes are the standard format for video games, visual effects, and 3D animation. The percision of BREPs make them the essential format for CAD (Computer-Aided Design), mechanical engineering, and 3d printing,
+Imagine a teapot. How do we render it on screen in a video game? How do we represent it? The most common approach is to stitch together thousands - if not millions - of tiny triangles into the shape. The more triangles, the better the detail.
 
+This faceted structure makes meshes computationally lightweight to draw on screen, making them ideal for video games, simulations, and visual effects. However, once we step into the world of precision, this becomes a limiting feature - and that's where BREPs come in.
+
+## What is a BREP?
+
+**Boundary Representation** (BREP) defines a 3D model mathematically using geometric boundaries - precisely calculated surfaces (NURBS), curves, and points. Instead of approximating a shape with flat polygons, a BREP maintains infinite precision: curves stay perfectly smooth no matter how much you zoom in.
+
+This exact mathematical definition also allows for the inclusion of solid properties, enabling software to accurately calculate a model's physical volume and mass.
+
+## When to Use Each?
+
+- **Meshes** are the standard format for video games, visual effects, and 3D animation - anywhere rendering speed matters more than precision.
+- **BREPs** are the essential format for CAD (Computer-Aided Design), mechanical engineering, and 3D printing - anywhere precision and physical accuracy are non-negotiable.
