@@ -4,6 +4,8 @@ description = "A math and deep-learning crate written from scratch using Rust."
 weight = 2
 
 [extra]
+category = "ML / Math Crate"
+scale = "Open Source"
 tech = ["Rust", "Deep Learning", "Math"]
 github = "https://github.com/jon-s58/astra"
 +++

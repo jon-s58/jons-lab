@@ -13,9 +13,10 @@ highlight_theme = "base16-ocean-dark"
 
 [extra]
 motto = "Forged from first principles."
-# Homepage status strip: the project shown under "Currently Working On".
-# Value must match a file in content/projects/ (without .md).
+# Homepage status strip. current_project must match a file in content/projects/ (no .md).
+# featured_loop must match a file in content/loops/ (no .md).
 current_project = "incudo"
+featured_loop = "building-a-database-from-scratch-page"
 social_links = [
     { name = "GitHub", url = "https://github.com/jon-s58" },
     { name = "LinkedIn", url = "https://www.linkedin.com/in/jonathan-sarig" },

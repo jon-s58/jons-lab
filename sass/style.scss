@@ -2,26 +2,79 @@
 // Jon's Lab — Industrial Workshop Aesthetic
 // =============================================================================
 
-// -- Colors --
-// Warm dark, like aged leather or worn wood under low light
-$bg-primary:     #1c1916;
-$bg-secondary:   #221e1a;
-$bg-card:        #25211d;
-$bg-card-hover:  #2a2620;
+// -- Color tokens --
+// Exposed as CSS custom properties so the dark/light theme can swap them at
+// runtime. SCSS variables below are thin aliases that forward to the CSS vars,
+// which lets the rest of the file keep using $bg-primary etc. unchanged.
+:root {
+    color-scheme: dark;
 
-// Cream tones, slightly warmer than pure white
-$text-primary:   #e4ddcd;
-$text-secondary: #948c7e;
-$text-muted:     #5e564b;
+    // Warm dark, like aged leather or worn wood under low light
+    --bg-primary:     #1c1916;
+    --bg-secondary:   #221e1a;
+    --bg-card:        #25211d;
+    --bg-card-hover:  #2a2620;
 
-// Soft muted brass — reads as metal, not as "gold"
-$accent:         #c4a47a;
-$accent-dim:     #9a8160;
-$accent-glow:    rgba(196, 164, 122, 0.10);
+    // Cream tones, slightly warmer than pure white
+    --text-primary:   #e4ddcd;
+    --text-secondary: #948c7e;
+    --text-muted:     #5e564b;
 
-// Subtle warm borders
-$border:         #2e2922;
-$border-light:   #3a352d;
+    // Soft muted brass — reads as metal, not as "gold"
+    --accent:         #c4a47a;
+    --accent-dim:     #9a8160;
+    --accent-hover:   #d2b68d;
+    --accent-glow:    rgba(196, 164, 122, 0.10);
+
+    // Subtle warm borders
+    --border:         #2e2922;
+    --border-light:   #3a352d;
+
+    // Forge (card panel) tones
+    --forge-iron:       #3a3430;
+    --forge-panel:      #221d18;
+    --forge-panel-rule: #2f2a23;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    // Warm paper / workshop light — the "lighter scheme" from Direction C
+    --bg-primary:     #f5efe2;
+    --bg-secondary:   #ece4d2;
+    --bg-card:        #fbf7ec;
+    --bg-card-hover:  #f0e8d4;
+
+    --text-primary:   #1a1612;
+    --text-secondary: #6b6154;
+    --text-muted:     #928773;
+
+    --accent:         #8a6a2f;
+    --accent-dim:     #7a5d29;
+    --accent-hover:   #a47d39;
+    --accent-glow:    rgba(138, 106, 47, 0.12);
+
+    --border:         rgba(26, 22, 18, 0.14);
+    --border-light:   rgba(26, 22, 18, 0.22);
+
+    --forge-iron:       #d6cab0;
+    --forge-panel:      #fbf7ec;
+    --forge-panel-rule: #e4d9bf;
+}
+
+$bg-primary:     var(--bg-primary);
+$bg-secondary:   var(--bg-secondary);
+$bg-card:        var(--bg-card);
+$bg-card-hover:  var(--bg-card-hover);
+$text-primary:   var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-muted:     var(--text-muted);
+$accent:         var(--accent);
+$accent-dim:     var(--accent-dim);
+$accent-hover:   var(--accent-hover);
+$accent-glow:    var(--accent-glow);
+$border:         var(--border);
+$border-light:   var(--border-light);
 
 // -- Typography --
 $font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -68,7 +121,7 @@ a {
     transition: color 0.2s;
 
     &:hover {
-        color: lighten($accent, 12%);
+        color: $accent-hover;
     }
 }
 
@@ -120,7 +173,7 @@ img {
         color: $text-primary;
 
         .logo-mark {
-            color: lighten($accent, 8%);
+            color: $accent-hover;
         }
     }
 }
@@ -145,12 +198,12 @@ img {
 .site-controls {
     display: flex;
     align-items: center;
-    gap: $space-md;
+    gap: 1.25rem;
 }
 
 .site-nav {
     display: flex;
-    gap: $space-md;
+    gap: 1.5rem;
 
     a {
         color: $text-secondary;
@@ -188,8 +241,49 @@ img {
     display: flex;
     align-items: center;
     gap: $space-xs;
-    padding-left: $space-sm;
+    padding-left: 0.75rem;
     border-left: 1px solid $border;
+}
+
+// --- Theme toggle (dark / light) ---
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: $text-secondary;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, transform 0.2s;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }
+
+    .theme-icon-sun  { display: none; }
+    .theme-icon-moon { display: block; }
+
+    &:hover {
+        color: $accent;
+        transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-color: $accent;
+        color: $accent;
+    }
+}
+
+// In light mode, swap which icon is shown (moon → sun).
+:root[data-theme="light"] .theme-toggle {
+    .theme-icon-moon { display: none; }
+    .theme-icon-sun  { display: block; }
 }
 
 .nav-social-link {
@@ -922,7 +1016,9 @@ img {
 // Direction C — Workshop / Forge (Home)
 // =============================================================================
 
-$forge-iron: #3a3430;
+$forge-iron: var(--forge-iron);
+$forge-panel: var(--forge-panel);
+$forge-panel-rule: var(--forge-panel-rule);
 $forge-pad-x: 48px;
 
 body.home-forge {
@@ -956,15 +1052,32 @@ body.home-forge {
     display: inline-block;
     font-family: $font-mono;
     font-size: 0.64rem;
-    padding: 3px 8px;
+    padding: 4px 9px;
     color: $text-primary;
     border: 1px solid $forge-iron;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    background: transparent;
+    // Filled background so chips don't disappear into cards
+    background: $bg-primary;
 
     &--outline {
         border-color: $border-light;
+        background: $forge-panel;
+    }
+}
+
+// --- Workshop floor label (above status strip) ---
+.forge-workshop-label {
+    padding: 0 $forge-pad-x 10px;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $text-secondary;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    .forge-workshop-dot {
+        color: $accent;
+        margin: 0 6px;
     }
 }
 
@@ -1022,15 +1135,153 @@ body.home-forge {
     }
 }
 
-// --- Hero ---
-.forge-hero {
-    padding: 72px $forge-pad-x 20px;
-    max-width: 1400px;
+// --- ABOUT panel (under the hero) ---
+// Answers "who is this?" before the visitor scrolls to projects.
+.forge-about {
+    margin: 0 $forge-pad-x 48px;
+    padding: 32px 36px;
+    background: $forge-panel;
+    border: 1px solid $forge-panel-rule;
+    display: grid;
+    grid-template-columns: 1.3fr 1px 1fr;
+    gap: 36px;
+    align-items: start;
+
+    .forge-about-eyebrow {
+        font-family: $font-mono;
+        font-size: 0.72rem;
+        color: $accent;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    .forge-about-lede {
+        font-size: 1rem;
+        color: $text-primary;
+        line-height: 1.6;
+        margin: 0;
+        opacity: 0.92;
+
+        b { color: $text-primary; }
+    }
+
+    .forge-about-divider {
+        background: $forge-panel-rule;
+        height: 100%;
+        min-height: 120px;
+    }
+
+    .forge-about-umbrella {
+        display: grid;
+        gap: 8px;
+        font-family: $font-mono;
+        font-size: 0.78rem;
+        color: $text-primary;
+    }
+}
+
+.forge-umbrella-row {
+    display: grid;
+    grid-template-columns: 18px 110px 1fr;
+    align-items: baseline;
+    gap: 10px;
+    padding: 5px 0;
+    border-bottom: 1px dashed $border;
+
+    .forge-umbrella-glyph { color: $accent; }
+    .forge-umbrella-key   { color: $text-secondary; letter-spacing: 0.08em; }
+    .forge-umbrella-val   { color: $text-primary; }
+}
+
+// --- Top status strip ---
+// Thin horizontal bar that sits directly under the site header. Replaces the
+// old "workshop floor" strip — cells are key→value pairs (space-between),
+// not stacked.
+.forge-strip {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid $border;
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+
+    &-cell {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 24px;
+        border-right: 1px solid $border;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+
+        &--last { border-right: none; }
+
+        &--link {
+            color: inherit;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+
+            &:hover {
+                background: $bg-card;
+                color: $accent;
+
+                .forge-strip-value { color: $accent; }
+            }
+        }
+    }
+
+    &-key {
+        color: $text-muted;
+        white-space: nowrap;
+    }
+
+    &-value {
+        color: $text-primary;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// --- Lead (hero + showcase) ---
+// Two-column: hero copy + stats on the left, two hand-picked cards stacked
+// on the right, on the same Y-axis. This is the first-look composition.
+.forge-lead {
+    padding: 56px $forge-pad-x 64px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.forge-lead-main {
+    padding-top: 8px;
+    // Anchor container queries so the display and blurb can scale to the
+    // column width, not just the viewport — keeps the hero balanced whether
+    // it's sitting in the two-col lead or full-width below the breakpoint.
+    container-type: inline-size;
+    container-name: lead-main;
+    min-width: 0;
+
+    .forge-kicker {
+        color: $text-secondary;
+        letter-spacing: 0.2em;
+        margin-bottom: 24px;
+    }
 
     .forge-display {
         font-family: $font-display;
         font-weight: 700;
-        font-size: clamp(3.5rem, 10vw, 9rem);
+        // 18cqi (≈18% of the lead column's inline size) scales smoothly as the
+        // column grows/shrinks. Viewport bounds keep the clamp safe in
+        // browsers without container-query support (falls back to the upper).
+        font-size: clamp(2.75rem, 18cqi, 9rem);
         line-height: 0.9;
         letter-spacing: -0.035em;
         margin: 0 0 1.25rem;
@@ -1046,41 +1297,163 @@ body.home-forge {
         vertical-align: 0.08em;
     }
 
-    .forge-hero-grid {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr;
-        gap: 48px;
-        margin-top: 48px;
-        max-width: 1120px;
-    }
-
-    .forge-hero-lede {
-        font-size: 1.05rem;
-        color: $text-primary;
-        opacity: 0.88;
-        line-height: 1.55;
-        margin: 0;
-    }
-
-    .forge-stats {
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        font-family: $font-mono;
-        font-size: 0.75rem;
+    .forge-lead-blurb {
         color: $text-secondary;
-
-        .forge-stat-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed $border-light;
-            padding: 6px 0;
-
-            dt { margin: 0; letter-spacing: 0.04em; text-transform: uppercase; }
-            dd { margin: 0; color: $text-primary; }
-        }
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin: 0 0 28px;
+        max-width: 520px;
     }
+}
+
+.forge-stats {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    max-width: 440px;
+
+    .forge-stat-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: baseline;
+        gap: 24px;
+        padding: 10px 0;
+        border-bottom: 1px dashed $border;
+
+        dt { margin: 0; color: $text-secondary; }
+        dd { margin: 0; color: $text-primary; font-size: 0.82rem; letter-spacing: 0.06em; }
+    }
+}
+
+// --- Showcase (hand-picked cards) ---
+.forge-showcase {
+    display: grid;
+    gap: 16px;
+}
+
+.forge-pick {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    min-height: 210px;
+    background: $forge-panel;
+    border: 1px solid $forge-panel-rule;
+    border-top: 2px solid $accent;
+    color: $text-primary;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+
+    &:hover {
+        color: $text-primary;
+        transform: translateY(-1px);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 10px 24px rgba(0, 0, 0, 0.26);
+
+        .forge-pick-cta { filter: brightness(1.15); }
+    }
+}
+
+// Lighter shadow in light mode so cards don't look muddy.
+:root[data-theme="light"] .forge-pick {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04), 0 6px 18px rgba(0, 0, 0, 0.06);
+
+    &:hover {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 10px 22px rgba(0, 0, 0, 0.08);
+    }
+}
+
+.forge-pick-specimen {
+    background: $bg-primary;
+    border-right: 1px solid $forge-panel-rule;
+    padding: 20px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
+    min-width: 0;
+
+    .forge-pick-diagram {
+        width: 100%;
+        flex: 1;
+        min-height: 0;
+        display: block;
+    }
+
+    .forge-pick-diagram-accent { color: $accent; }
+    .forge-pick-diagram-iron   { color: $forge-iron; }
+
+    .forge-pick-specimen-label {
+        font-family: $font-mono;
+        font-size: 0.52rem;
+        color: $text-muted;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+}
+
+.forge-pick-body {
+    padding: 22px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.forge-pick-eyebrow {
+    font-family: $font-mono;
+    font-size: 0.62rem;
+    color: $accent;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.forge-pick-title {
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    color: $text-primary;
+
+    &--essay {
+        font-size: 1.45rem;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+}
+
+.forge-pick-tagline {
+    color: $text-secondary;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.forge-pick-date {
+    font-family: $font-mono;
+    font-size: 0.62rem;
+    color: $text-muted;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.forge-pick-cta-row {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.forge-pick-cta {
+    font-family: $font-mono;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: $accent;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: filter 0.2s;
 }
 
 // --- Sections ---
@@ -1127,33 +1500,59 @@ body.home-forge {
 }
 
 // --- Forge cards ---
+// Cards now sit on an elevated panel tone so they read distinctly against the
+// page bg, with a 1px border, a gold top-rule ("forged" stamp), and a CATEGORY
+// label above the system diagram. Direction C, revised.
 .forge-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: $border;
+    gap: 20px;
 }
 
 .forge-card {
-    background: $bg-primary;
-    padding: 24px 24px 20px;
+    position: relative;
+    background: $forge-panel;
+    border: 1px solid $forge-panel-rule;
+    padding: 22px 22px 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-height: 300px;
+    gap: 10px;
+    min-height: 340px;
     color: $text-primary;
-    transition: background 0.2s;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 6px 18px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+
+    // Gold top-rule — the "forged" stamp
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: $accent;
+    }
 
     &:hover {
-        background: $bg-card;
         color: $text-primary;
+        transform: translateY(-1px);
+        border-color: $forge-iron;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 10px 24px rgba(0, 0, 0, 0.24);
     }
 }
 
+.forge-card-category {
+    font-family: $font-mono;
+    font-size: 0.66rem;
+    color: $accent;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
 .forge-card-diagram {
-    height: 80px;
+    height: 70px;
     border: 1px solid $forge-iron;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     background-image: repeating-linear-gradient(135deg, $forge-iron 0 1px, transparent 1px 10px);
     position: relative;
 
@@ -1354,6 +1753,20 @@ body.home-forge {
 }
 
 // --- Responsive ---
+// Intermediate: between 900 and 1100px the two-col lead gets cramped, so
+// collapse to single-column but keep everything else desktop-sized.
+@media (min-width: 901px) and (max-width: 1100px) {
+    .forge-lead {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .forge-showcase {
+        max-width: 760px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 900px) {
     .forge-status {
         flex-wrap: wrap;
@@ -1366,13 +1779,31 @@ body.home-forge {
         }
     }
 
-    .forge-hero {
-        padding: 48px 24px 12px;
+    .forge-lead {
+        padding: 40px 24px 48px;
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
 
-        .forge-hero-grid {
-            grid-template-columns: 1fr;
-            gap: 28px;
+    // Showcase stacks full-width below the hero at this breakpoint.
+    .forge-showcase { max-width: 760px; }
+
+    .forge-strip {
+        flex-wrap: wrap;
+
+        .forge-strip-cell {
+            flex: 1 1 50%;
+            border-bottom: 1px solid $border;
+
+            &:nth-child(2n) { border-right: none; }
         }
+    }
+
+    .forge-pick {
+        grid-template-columns: 110px 1fr;
+
+        .forge-pick-specimen { padding: 16px 10px 10px; }
+        .forge-pick-body { padding: 16px 18px 14px; }
     }
 
     .forge-section { padding: 40px 24px 12px; }
@@ -1404,4 +1835,30 @@ body.home-forge {
             }
         }
     }
+}
+
+@media (max-width: 560px) {
+    .forge-pick {
+        grid-template-columns: 1fr;
+
+        .forge-pick-specimen {
+            border-right: none;
+            border-bottom: 1px solid $forge-panel-rule;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+
+            .forge-pick-diagram { max-height: 110px; flex: 0 0 120px; }
+        }
+    }
+
+    .forge-strip .forge-strip-cell {
+        flex: 1 1 100%;
+        border-right: none;
+    }
+
+    .forge-pick-title { font-size: 1.8rem; }
+
+    .forge-pick-badge { display: none; }
 }

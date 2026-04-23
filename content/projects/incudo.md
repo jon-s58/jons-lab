@@ -4,6 +4,9 @@ description = "A CAD Processing Engine."
 weight = 1
 
 [extra]
+category = "CAD Engine"
+scale = "Startup"
+tagline = "A processing engine for parametric CAD."
 tech = ["Rust", "C++", "Math"]
 github = "https://github.com/jon-s58/astra"
 +++

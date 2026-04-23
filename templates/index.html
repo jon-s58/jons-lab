@@ -12,6 +12,138 @@
 {% if current_project_slug %}
     {% set current_project = get_page(path="projects/" ~ current_project_slug ~ ".md") %}
 {% endif %}
+{% set featured_loop_slug = config.extra.featured_loop | default(value="") %}
+{% set featured_loop = false %}
+{% if featured_loop_slug %}
+    {% set featured_loop = get_page(path="loops/" ~ featured_loop_slug ~ ".md") %}
+{% endif %}
+
+<section class="forge-strip" aria-label="Lab status">
+    <div class="forge-strip-cell">
+        <span class="forge-strip-key">Status</span>
+        <span class="forge-strip-value"><span class="forge-dot"></span>Building</span>
+    </div>
+    {% if total_loops > 0 %}
+    {% set latest_loop = loops_section.pages | first %}
+    <a class="forge-strip-cell forge-strip-cell--link" href="{{ latest_loop.permalink }}">
+        <span class="forge-strip-key">Current Loop</span>
+        <span class="forge-strip-value">{{ latest_loop.title | truncate(length=48) }}</span>
+    </a>
+    {% endif %}
+    {% if current_project %}
+    <a class="forge-strip-cell forge-strip-cell--link" href="{{ current_project.permalink }}">
+        <span class="forge-strip-key">Currently Working On</span>
+        <span class="forge-strip-value"><span class="forge-dot"></span>{{ current_project.title }}</span>
+    </a>
+    {% endif %}
+    <div class="forge-strip-cell">
+        <span class="forge-strip-key">Uptime</span>
+        <span class="forge-strip-value" data-uptime>—</span>
+    </div>
+    <div class="forge-strip-cell forge-strip-cell--last">
+        <span class="forge-strip-key">Local Time</span>
+        <span class="forge-strip-value" data-local-time>—</span>
+    </div>
+</section>
+
+<section class="forge-lead">
+    <div class="forge-lead-main">
+        <div class="forge-kicker">// A workshop for math-heavy software</div>
+        <h1 class="forge-display">
+            Forged from first principles.<span class="forge-display-mark">&#9670;</span>
+        </h1>
+        <p class="forge-lead-blurb">
+            I build software that leans hard on math &mdash; engines, solvers, runtimes.
+            Some stays open-source, some becomes a startup, some stays a micro-SaaS
+            I run from the shop.
+        </p>
+    </div>
+
+    <aside class="forge-showcase" aria-label="Hand-picked">
+        {% if current_project %}
+        <a class="forge-pick forge-pick--project" href="{{ current_project.permalink }}">
+            <div class="forge-pick-specimen" aria-hidden="true">
+                <span class="forge-pick-specimen-label forge-pick-specimen-label--top">Specimen</span>
+                <svg class="forge-pick-diagram" viewBox="0 0 120 140" preserveAspectRatio="xMidYMid meet" role="presentation">
+                    <defs>
+                        <pattern id="forge-pick-grid-project" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+                        </pattern>
+                    </defs>
+                    <rect width="120" height="140" fill="url(#forge-pick-grid-project)" class="forge-pick-diagram-iron"/>
+                    <g stroke="currentColor" stroke-width="1" fill="none" class="forge-pick-diagram-accent">
+                        <circle cx="60" cy="70" r="42"/>
+                        <circle cx="60" cy="70" r="28"/>
+                        <path d="M 18 70 L 102 70 M 60 28 L 60 112"/>
+                    </g>
+                    <g fill="currentColor" class="forge-pick-diagram-accent">
+                        <circle cx="60" cy="70" r="1.8"/>
+                        <circle cx="18" cy="70" r="1.4"/>
+                        <circle cx="102" cy="70" r="1.4"/>
+                    </g>
+                </svg>
+                <span class="forge-pick-specimen-label forge-pick-specimen-label--bot">v0.3.2 · 1:1</span>
+            </div>
+            <div class="forge-pick-body">
+                <span class="forge-pick-eyebrow">
+                    {%- if current_project.extra.category -%}
+                        {{ current_project.extra.category }}
+                    {%- else -%}
+                        Project
+                    {%- endif -%}
+                </span>
+                <div class="forge-pick-title">{{ current_project.title }}</div>
+                {% if current_project.extra.tagline %}
+                <div class="forge-pick-tagline">{{ current_project.extra.tagline }}</div>
+                {% endif %}
+                <div class="forge-pick-cta-row">
+                    <span class="forge-pick-cta">Case study &rarr;</span>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+
+        {% if featured_loop %}
+        <a class="forge-pick forge-pick--essay" href="{{ featured_loop.permalink }}">
+            <div class="forge-pick-specimen" aria-hidden="true">
+                <span class="forge-pick-specimen-label forge-pick-specimen-label--top">Fig · 01</span>
+                <svg class="forge-pick-diagram" viewBox="0 0 120 140" preserveAspectRatio="xMidYMid meet" role="presentation">
+                    <rect x="12" y="14" width="96" height="112" fill="none" stroke="currentColor" stroke-width="1" class="forge-pick-diagram-accent"/>
+                    <rect x="12" y="14" width="96" height="14" fill="currentColor" opacity="0.15" class="forge-pick-diagram-accent"/>
+                    <g fill="currentColor" class="forge-pick-diagram-accent">
+                        <rect x="16" y="33" width="13" height="5" opacity="0.45"/>
+                        <rect x="33" y="33" width="13" height="5" opacity="0.45"/>
+                        <rect x="50" y="33" width="13" height="5" opacity="0.45"/>
+                        <rect x="67" y="33" width="13" height="5" opacity="0.12"/>
+                        <rect x="84" y="33" width="13" height="5" opacity="0.12"/>
+                    </g>
+                    <rect x="16" y="48" width="88" height="42" fill="none" stroke-width="0.5" stroke-dasharray="2 2" class="forge-pick-diagram-iron" stroke="currentColor"/>
+                    <g fill="currentColor" opacity="0.55" class="forge-pick-diagram-accent">
+                        <rect x="16" y="96"  width="88" height="4"/>
+                        <rect x="16" y="104" width="64" height="4"/>
+                        <rect x="16" y="112" width="80" height="4"/>
+                    </g>
+                </svg>
+                <span class="forge-pick-specimen-label forge-pick-specimen-label--bot">Page · 8KB</span>
+            </div>
+            <div class="forge-pick-body">
+                <span class="forge-pick-eyebrow">Loops of Thought</span>
+                <div class="forge-pick-title forge-pick-title--essay">{{ featured_loop.title }}</div>
+                <div class="forge-pick-date">{{ featured_loop.date | date(format="%b %d, %Y") | upper }}</div>
+                <div class="forge-pick-cta-row">
+                    <span class="forge-pick-cta">Read entry &rarr;</span>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+    </aside>
+</section>
+
+{# Workshop Floor status strip — hidden for now; flip the guard to re-enable. #}
+{% if false %}
+<div class="forge-workshop-label">
+    // The Workshop Floor <span class="forge-workshop-dot">&middot;</span> live
+</div>
 
 <section class="forge-status" aria-label="Workshop status">
     <div class="forge-status-cell forge-status-cell--flex1">
@@ -43,28 +175,7 @@
         <span class="forge-status-value" data-local-time>—</span>
     </div>
 </section>
-
-<section class="forge-hero">
-    <div class="forge-kicker">// A workshop for math-heavy software</div>
-    <h1 class="forge-display">
-        Forged<br>
-        from first<br>
-        principles.<span class="forge-display-mark">&#9670;</span>
-    </h1>
-    <div class="forge-hero-grid">
-        <p class="forge-hero-lede">
-            I build software that leans hard on math &mdash; engines, solvers, runtimes.
-            Some stays open-source, some becomes a startup, some stays a micro-SaaS
-            I run from the shop.
-        </p>
-        <dl class="forge-stats">
-            <div class="forge-stat-row"><dt>Active Projects</dt><dd>{{ total_projects }}</dd></div>
-            <div class="forge-stat-row"><dt>Loops Published</dt><dd>{{ total_loops }}</dd></div>
-            <div class="forge-stat-row"><dt>Lines of Rust</dt><dd>~84k</dd></div>
-            <div class="forge-stat-row"><dt>Coffee / Day</dt><dd>3.2</dd></div>
-        </dl>
-    </div>
-</section>
+{% endif %}
 
 {% if total_projects > 0 %}
 <section class="forge-section">
@@ -79,6 +190,13 @@
         {% for project in projects_section.pages %}
         {% if loop.index <= 3 %}
         <a class="forge-card" href="{{ project.permalink }}">
+            <div class="forge-card-category">
+                {%- if project.extra.category -%}
+                    {{ project.extra.category | upper }}
+                {%- else -%}
+                    PROJECT
+                {%- endif -%}
+            </div>
             <div class="forge-card-diagram" aria-hidden="true">
                 <span class="forge-card-diagram-label">System &middot; {{ project.title | upper }}</span>
             </div>
